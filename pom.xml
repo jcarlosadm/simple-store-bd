@@ -19,5 +19,13 @@
 			<version>5.3.1</version>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.rethinkdb/rethinkdb-driver -->
+		<dependency>
+			<groupId>com.rethinkdb</groupId>
+			<artifactId>rethinkdb-driver</artifactId>
+			<version>2.3.3</version>
+		</dependency>
+
 	</dependencies>
 </project>
