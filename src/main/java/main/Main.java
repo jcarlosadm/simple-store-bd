@@ -17,6 +17,12 @@ public class Main {
 			for (Product product : rQuery.getProducts()) {
 				System.out.println(product);
 			}
+			
+			System.out.println("===================");
+			System.out.println(rQuery.getProductById("034bd25b-fabe-4d34-ab76-c2ddc617708b"));
+			System.out.println(rQuery.getProductById("034bd25b-fabe-4d34-ab76-c2ddc617708"));
+			
+			
 
 		} catch (Exception e) {
 			System.out.println("Error to connect. exiting...");

@@ -21,6 +21,10 @@ public class RethinkDBProductQuery {
 		this.conn = conn;
 	}
 
+	/**
+	 * get all products in database
+	 * @return all products
+	 */
 	public List<Product> getProducts() {
 		List<Product> products = new ArrayList<>();
 
@@ -32,6 +36,16 @@ public class RethinkDBProductQuery {
 		}
 
 		return products;
+	}
+	
+	/**
+	 * get Product by id
+	 * @param id
+	 * @return Product object, or null if id not exists
+	 */
+	public Product getProductById(String id) {
+		HashMap<String, ?> data = r.db(DB_NAME).table(TABLE_NAME).get(id).run(conn);
+		return data == null? null : productData(data);
 	}
 
 	private Product productData(HashMap<String, ?> data) {
