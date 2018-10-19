@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.rethinkdb.RethinkDB;
+import com.rethinkdb.gen.ast.Javascript;
 import com.rethinkdb.net.Connection;
 import com.rethinkdb.net.Cursor;
 
@@ -21,18 +22,22 @@ public class RethinkDBProductQuery {
 		this.conn = conn;
 	}
 
-	/**
-	 * get all products in database
-	 * @return all products
-	 */
-	public List<Product> getProducts() {
+	public List<Product> getProducts(Javascript filterFunction) {
 		List<Product> products = new ArrayList<>();
 
-		Cursor<HashMap<String, ?>> cursor = r.db(DB_NAME).table(TABLE_NAME).run(conn);
+		try {
+			Cursor<HashMap<String, ?>> cursor = null;
+			if (filterFunction != null)
+				cursor = r.db(DB_NAME).table(TABLE_NAME).filter(filterFunction).run(conn);
+			else
+				cursor = r.db(DB_NAME).table(TABLE_NAME).run(conn);
 
-		for (HashMap<String, ?> data : cursor) {
-			Product product = productData(data);
-			products.add(product);
+			for (HashMap<String, ?> data : cursor) {
+				Product product = productData(data);
+				products.add(product);
+			}
+		} catch (Exception e) {
+			System.out.println("query error");
 		}
 
 		return products;
